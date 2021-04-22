@@ -34,8 +34,7 @@ def generate_direction_images(directions):
                 )
             combined_name += text
             if image_list:
-                if (image_list[-1].find("left") > 0 and direction.endswith("left") or
-                image_list[-1].find("right") > 0 and direction.endswith("right")):
+                if image_list[-1].find("current") == -1 and direction != "current":
                     divider_path = os.path.join(DATA_DIR, f'divider_{IMG_HEIGHT}.png')
                     image_list.append(divider_path)
                     divider_file = Path(divider_path)

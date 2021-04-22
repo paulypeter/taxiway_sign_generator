@@ -8,7 +8,7 @@ from generate_direction_images import generate_direction_images
 from config import DATA_DIR, IMG_HEIGHT
 from add_border import add_border, determine_border_colour
 
-def combine_images(image_list, combined_img_name):
+def combine_images(image_list, combined_img_path):
     """! combines multiple images horizontally
 
     @param image_list list of paths to image files
@@ -25,7 +25,7 @@ def combine_images(image_list, combined_img_name):
     for (image, size) in zip(images, image_width):
         combined.paste(image, (x_position, 0))
         x_position += size
-    combined.save(os.path.join(DATA_DIR, "signs", f'{combined_img_name}.png'))
+    combined.save(combined_img_path)
 
 def init_data_dir(directions):
     """! initialise directories
@@ -48,11 +48,11 @@ def generate_image(directions):
     init_data_dir(directions)
 
     image_path_list, combined_name = generate_direction_images(directions)
-    combine_images(image_path_list, combined_name)
+    combined_img_path = os.path.join(DATA_DIR, "signs", f'{combined_name}.png')
+    combine_images(image_path_list, combined_img_path)
 
     border_colour = determine_border_colour(directions)
     add_border(os.path.join(DATA_DIR, "signs", f'{combined_name}.png'), border_colour, 10)
-
 
 if __name__ == "__main__":
     import argparse

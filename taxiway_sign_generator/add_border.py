@@ -26,4 +26,5 @@ def determine_border_colour(directions):
     @param directions dict with directions
 
     """
-    return YELLOW if [*(directions)] == ["current"] else BLACK
+    directions_clean = {direction: twy for direction, twy in directions.items() if twy is not None}
+    return YELLOW if [*(directions_clean)] == ["current"] else BLACK
