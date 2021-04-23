@@ -4,7 +4,14 @@ This project creates taxiway signs to be used as a training dataset for neural n
 
 ## Usage
 
+Change directory:
+
+```
+cd taxiway_sign_generator
+```
+
 Set font and size in `config.py`.
+
 ```
 python sign_generator.py [-ul UP-LEFT] [-l LEFT] [-dl DOWN-LEFT] [-c CURRENT] [-ur UP-RIGHT] [-r RIGHT] [-dr DOWN-RIGHT]
 ```
