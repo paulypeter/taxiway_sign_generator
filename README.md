@@ -14,6 +14,7 @@ generates a single sign.
 ```
 python batch_generate.py creates a number of different and random signs.
 ```
+![examples](/img/examples.png)
 
 ## Requirements
 
