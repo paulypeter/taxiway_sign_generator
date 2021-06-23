@@ -12,7 +12,7 @@ DIRECTION_ARROWS = {
     "down_right": "\u2198"
 }
 
-IMG_HEIGHT = 512
+IMG_HEIGHT = 112
 FONT_SIZE = int(IMG_HEIGHT/100) * 100
 
 YELLOW = (240, 231, 15)
@@ -26,6 +26,6 @@ COLOUR_SCHEMES = {   # (bg, fg)
     "warning": (RED, WHITE)
 }
 
-#font = "/home/peter/Roadgeek2014SeriesD2.ttf"
+#FONT = "/home/peter/Roadgeek2014SeriesD2.ttf"
 #font = "RG2014D.ttf"
 FONT = "/usr/share/fonts/OTF/overpass-semibold.otf"
