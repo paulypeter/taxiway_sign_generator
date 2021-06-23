@@ -3,6 +3,7 @@
 import os
 from pathlib import Path
 from PIL import Image
+import random
 
 from generate_direction_images import generate_direction_images
 from config import DATA_DIR, IMG_HEIGHT
