@@ -51,8 +51,10 @@ def get_rotated_size(size, angle):
     phi = math.atan(cx / cy) + gamma
     phi_2 = gamma - math.atan(cx / cy)
     x_A = dist_to_corner * math.sin(phi)
+    y_A = dist_to_corner * math.cos(phi)
+    x_B = dist_to_corner * math.sin(phi_2)
     y_B = dist_to_corner * math.cos(phi_2)
-    return (2 * x_A, 2 * y_B)
+    return ((x_A, y_A), (x_B, y_B))
 
 if __name__ == "__main__":
     arrows = ["\u2196"]
@@ -107,4 +109,4 @@ if __name__ == "__main__":
         #     new_path = os.path.join('data', 'ocr', f'{global_index}.png')
         #     global_index += 1
         #     draw.save(new_path)
-        print(get_rotated_corners([100, 200], 90))
+        print(get_rotated_size([100, 200], 90))
