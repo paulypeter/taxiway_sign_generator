@@ -31,7 +31,7 @@ def generate_char_img(text, font_path, colour_scheme, size, path):
         text, fg_colour, img_font)
     img.save(path)
 
-def get_rotated_corners(size, angle):
+def get_rotated_size(size, angle):
     """ TODO: needed? or is using the height and width of rotated and pasted image enough? """
     """ get x_min, x_max, y_min, y_max for rotated rectangle """
 
@@ -49,12 +49,10 @@ def get_rotated_corners(size, angle):
     cx, cy = [int(item / 2) for item in size]
     dist_to_corner = math.sqrt(cx ** 2 + cy ** 2)
     phi = math.atan(cx / cy) + gamma
+    phi_2 = gamma - math.atan(cx / cy)
     x_A = dist_to_corner * math.sin(phi)
-    y_A = dist_to_corner * math.cos(phi)
-    print(x_A, y_A)
-    # symmetry:
-    # height = 2 * y_B
-    # width = 2 * x_A
+    y_B = dist_to_corner * math.cos(phi_2)
+    return (2 * x_A, 2 * y_B)
 
 if __name__ == "__main__":
     arrows = ["\u2196"]
@@ -109,4 +107,4 @@ if __name__ == "__main__":
         #     new_path = os.path.join('data', 'ocr', f'{global_index}.png')
         #     global_index += 1
         #     draw.save(new_path)
-        get_rotated_corners([100, 200], 90)
+        print(get_rotated_corners([100, 200], 90))
