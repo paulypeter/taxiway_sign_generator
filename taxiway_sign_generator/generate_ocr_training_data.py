@@ -14,6 +14,8 @@ from config import (
     YELLOW
 )
 
+# TODO: enable multiple fonts
+
 def generate_char_img(text, font_path, colour_scheme, size, path):
     bg_colour, fg_colour = COLOUR_SCHEMES["branching"]
     img_font = ImageFont.truetype(FONT, FONT_SIZE)
