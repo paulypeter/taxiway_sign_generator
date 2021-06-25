@@ -96,19 +96,24 @@ if __name__ == "__main__":
         """ from generate_text_image end """
         # https://stackoverflow.com/a/51964802
 
-        # for i in range(360):
-        #     border_width = 10
-        #     border_colour = YELLOW
-        #     img = Image.open(path)
-        #     img = img.rotate(i)
-        #     draw = Image.new('RGB',
-        #         (img.size[0] + 2 * border_width, img.size[1] + 2 * border_width),
-        #         border_colour)
-        #     mask = Image.new('L', img.size, 255)
-        #     mask = mask.rotate(i)
-        #     draw.paste(img, (border_width, border_width), mask)
+        for i in range(360):
+            border_width = 10
+            border_colour = YELLOW
+            img = Image.open(path)
+            img = img.rotate(i)
+            draw = Image.new('RGB',
+                (img.size[0] + 2 * border_width, img.size[1] + 2 * border_width),
+                border_colour)
+            mask = Image.new('L', img.size, 255)
+            mask = mask.rotate(i)
+            draw.paste(img, (border_width, border_width), mask)
+            A, B = get_rotated_size(img.size, i)
 
-        #     new_path = os.path.join('data', 'ocr', f'{global_index}.png')
-        #     global_index += 1
-        #     draw.save(new_path)
-        print(get_rotated_size([100, 200], 90))
+            new_path = os.path.join('data', 'ocr', f'{global_index}.png')
+            ground_truth_path = os.path.join('data', 'ocr', f'{global_index}.txt')
+            global_index += 1
+            with open(ground_truth_path, "w") as ground_truth_file:
+                ground_truth_file.write(
+                    f"{border_width}, {border_width}, {A[0] * 2}, {B[1] * 2}"
+                )
+            draw.save(new_path)
