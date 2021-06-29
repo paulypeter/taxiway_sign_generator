@@ -56,7 +56,16 @@ def get_rotated_size(size, angle):
     y_A = dist_to_corner * math.cos(phi)
     x_B = dist_to_corner * math.sin(phi_2)
     y_B = dist_to_corner * math.cos(phi_2)
-    return ((x_A, y_A), (x_B, y_B))
+    # (x_min, y_1), (x_2, y_min), (x_max, y_3), (x_4, y_max)
+    x_min = 0
+    x_max = 2 * x_A
+    x_2 = x_A - x_B
+    y_min = 0
+    y_max = 2 * y_B
+    y_1 = y_B - y_A
+    x_4 = x_max - x_1
+    y_3 = y_max - y_1
+    return ((x_min, y_1), (x_2, y_min), (x_max, y_3), (x_4, y_max))
 
 if __name__ == "__main__":
     arrows = ["\u2196"]
