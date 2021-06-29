@@ -61,13 +61,13 @@ def get_rotated_size(size, angle):
 if __name__ == "__main__":
     arrows = ["\u2196"]
     #input = arrows + list(string.ascii_uppercase) + list(string.digits)
-    input = ["A"]
+    
     dirpath = os.path.join('data', 'ocr')
     global_index = 1
 
-    for char in input:
+    for char in arrows:
         Path(os.path.join(dirpath, char)).mkdir(parents=True, exist_ok=True)
-        path = os.path.join('data', 'ocr', char, f'{char}.png')
+        path = os.path.join('data', 'ocr', f'{char}.png')
         # generate_text_image(
         #     text=char,
         #     font_path=FONT,
@@ -100,14 +100,14 @@ if __name__ == "__main__":
             border_width = 10
             border_colour = YELLOW
             img = Image.open(path)
-            img = img.rotate(i)
+            A, B = get_rotated_size(img.size, i)
             draw = Image.new('RGB',
-                (img.size[0] + 2 * border_width, img.size[1] + 2 * border_width),
+                (2 * int(A[0] + border_width), 2 * int(B[1] + border_width)),
                 border_colour)
             mask = Image.new('L', img.size, 255)
+            img = img.rotate(i)
             mask = mask.rotate(i)
             draw.paste(img, (border_width, border_width), mask)
-            A, B = get_rotated_size(img.size, i)
 
             new_path = os.path.join('data', 'ocr', f'{global_index}.png')
             ground_truth_path = os.path.join('data', 'ocr', f'{global_index}.txt')
