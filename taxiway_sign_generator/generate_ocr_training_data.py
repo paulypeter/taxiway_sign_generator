@@ -64,7 +64,7 @@ def get_rotated_size(size, angle):
     y_min = 0
     y_max = 2 * y_B
     y_1 = y_B - y_A
-    x_4 = x_max - x_1
+    x_4 = x_max - x_2
     y_3 = y_max - y_1
     return ((x_min, y_1), (x_2, y_min), (x_max, y_3), (x_4, y_max))
 
