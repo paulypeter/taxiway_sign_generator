@@ -69,7 +69,7 @@ def get_rotated_size(size, angle):
     return ((x_min, y_1), (x_2, y_min), (x_max, y_3), (x_4, y_max))
 
 if __name__ == "__main__":
-    arrows = ["\u2196"]
+    arrows = ["\u2191"]
     #input = arrows + list(string.ascii_uppercase) + list(string.digits)
     
     dirpath = os.path.join('data', 'ocr')
