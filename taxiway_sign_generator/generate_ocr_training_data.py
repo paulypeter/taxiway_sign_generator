@@ -41,6 +41,7 @@ def get_rotated_size(size, angle):
         """ returns an angle needed for the calculation """
         # coordinates repeat after 180 °
         # coordinates repeat (reversed) after 90 °
+        # TODO: repeat doesn't work!
         angle = angle % 180
         if angle > 90:
             return angle - 2 * (angle % 90)
