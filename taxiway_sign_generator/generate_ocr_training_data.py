@@ -110,16 +110,20 @@ if __name__ == "__main__":
             border_width = 10
             border_colour = YELLOW
             img = Image.open(path)
-            A, B = get_rotated_size(img.size, i)
+            A, B, C, D = get_rotated_size(img.size, i)
             max_dim = max(img.size)
             draw = Image.new('RGB',
-                (2 * int(A[0] + border_width), 2 * int(B[1] + border_width)),
+                (2 * int(C[0] + border_width), 2 * int(D[1] + border_width)),
                 border_colour)
             mask = Image.new('L', img.size, 255)
             img = img.rotate(i)
             mask = mask.rotate(i)
             draw.paste(img, (border_width, border_width), mask)
-
+            draw_line = ImageDraw.Draw(draw)
+            draw_line.line((A[0] + border_width, A[1] + border_width, B[0] + border_width, B[1] + border_width), fill=0)
+            draw_line.line((B[0] + border_width, B[1] + border_width, C[0] + border_width, C[1] + border_width), fill=0)
+            draw_line.line((C[0] + border_width, C[1] + border_width, D[0] + border_width, D[1] + border_width), fill=0)
+            draw_line.line((D[0] + border_width, D[1] + border_width, A[0] + border_width, A[1] + border_width), fill=0)
             new_path = os.path.join('data', 'ocr', f'{global_index}.png')
             ground_truth_path = os.path.join('data', 'ocr', f'{global_index}.txt')
             global_index += 1
