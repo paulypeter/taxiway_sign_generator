@@ -130,8 +130,8 @@ if __name__ == "__main__":
             draw_line.line((B[0] + border_width, B[1] + border_width, C[0] + border_width, C[1] + border_width), fill=0)
             draw_line.line((C[0] + border_width, C[1] + border_width, D[0] + border_width, D[1] + border_width), fill=0)
             draw_line.line((D[0] + border_width, D[1] + border_width, A[0] + border_width, A[1] + border_width), fill=0)
-            new_path = os.path.join('data', 'ocr', f'{global_index}.png')
-            ground_truth_path = os.path.join('data', 'ocr', f'{global_index}.txt')
+            new_path = os.path.join('data', 'ocr', f'{str(global_index).zfill(3)}.png')
+            ground_truth_path = os.path.join('data', 'ocr', f'{str(global_index).zfill(3)}.txt')
             global_index += 1
             with open(ground_truth_path, "w") as ground_truth_file:
                 ground_truth_file.write(
