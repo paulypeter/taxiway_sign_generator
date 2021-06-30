@@ -66,7 +66,11 @@ def get_rotated_size(size, angle):
     y_1 = y_B - y_A
     x_4 = x_max - x_2
     y_3 = y_max - y_1
-    return ((x_min, y_1), (x_2, y_min), (x_max, y_3), (x_4, y_max))
+    if angle % 180 < 90:
+        res = ((x_min, y_1), (x_2, y_min), (x_max, y_3), (x_4, y_max))
+    elif angle % 180 < 180:
+        res = ((x_min, y_3), (x_2, y_max), (x_max, y_1), (x_4, y_min))
+    return res
 
 if __name__ == "__main__":
     arrows = ["\u2191"]
