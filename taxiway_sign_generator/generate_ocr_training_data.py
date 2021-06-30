@@ -133,8 +133,23 @@ if __name__ == "__main__":
             new_path = os.path.join('data', 'ocr', f'{str(global_index).zfill(3)}.png')
             ground_truth_path = os.path.join('data', 'ocr', f'{str(global_index).zfill(3)}.txt')
             global_index += 1
+            pos_str = ",".join(
+                [
+                    "4",
+                    str((border_width + A[0])),
+                    str((border_width + B[0])),
+                    str((border_width + C[0])),
+                    str((border_width + D[0])),
+                    str((border_width + A[1])),
+                    str((border_width + B[1])),
+                    str((border_width + C[1])),
+                    str((border_width + D[1])),
+                    "",
+                    ""
+                ]
+            )
             with open(ground_truth_path, "w") as ground_truth_file:
                 ground_truth_file.write(
-                    f"{border_width}, {border_width}, {A[0] * 2}, {B[1] * 2}"
+                    pos_str
                 )
             draw.save(new_path)
