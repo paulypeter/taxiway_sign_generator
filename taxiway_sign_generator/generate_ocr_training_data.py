@@ -136,14 +136,14 @@ if __name__ == "__main__":
             pos_str = ",".join(
                 [
                     "4",
-                    str((border_width + A[0])),
-                    str((border_width + B[0])),
-                    str((border_width + C[0])),
-                    str((border_width + D[0])),
-                    str((border_width + A[1])),
-                    str((border_width + B[1])),
-                    str((border_width + C[1])),
-                    str((border_width + D[1])),
+                    str((border_width + A[0]) / draw.size[0]),
+                    str((border_width + B[0]) / draw.size[0]),
+                    str((border_width + C[0]) / draw.size[0]),
+                    str((border_width + D[0]) / draw.size[0]),
+                    str((border_width + A[1]) / draw.size[0]),
+                    str((border_width + B[1]) / draw.size[0]),
+                    str((border_width + C[1]) / draw.size[0]),
+                    str((border_width + D[1]) / draw.size[0]),
                     "",
                     ""
                 ]
