@@ -115,9 +115,11 @@ if __name__ == "__main__":
             border_colour = YELLOW
             img = Image.open(path)
             A, B, C, D = get_rotated_size(img.size, i)
+            x_max = max([x[0] for x in [A, B, C, D]])
+            y_max = max([x[1] for x in [A, B, C, D]])
             max_dim = max(img.size)
             draw = Image.new('RGB',
-                (2 * int(C[0] + border_width), 2 * int(D[1] + border_width)),
+                (2 * int(x_max + border_width), 2 * int(y_max + border_width)),
                 border_colour)
             mask = Image.new('L', img.size, 255)
             img = img.rotate(i)
