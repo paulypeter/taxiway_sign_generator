@@ -100,7 +100,7 @@ if __name__ == "__main__":
 
         margin = int((FONT_SIZE - text_height)/2)
         img_width = text_width
-        img = Image.new('RGB',(text_height + 5, text_height + 5), bg_colour)
+        img = Image.new('RGB',(text_width + 5, text_height + 5), bg_colour)
 
         draw = ImageDraw.Draw(img)
         draw.text((0, 0),
