@@ -119,7 +119,7 @@ if __name__ == "__main__":
             y_max = max([x[1] for x in [A, B, C, D]])
             max_dim = max(img.size)
             draw = Image.new('RGB',
-                (2 * int(x_max + border_width), 2 * int(y_max + border_width)),
+                (int(x_max + 2 * border_width), int(y_max + 2 * border_width)),
                 border_colour)
             mask = Image.new('L', img.size, 255)
             img = img.rotate(i, expand=True)
