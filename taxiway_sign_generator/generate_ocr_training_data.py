@@ -122,8 +122,8 @@ if __name__ == "__main__":
                 (2 * int(x_max + border_width), 2 * int(y_max + border_width)),
                 border_colour)
             mask = Image.new('L', img.size, 255)
-            img = img.rotate(i)
-            mask = mask.rotate(i)
+            img = img.rotate(i, expand=True)
+            mask = mask.rotate(i, expand=True)
             draw.paste(img, (border_width, border_width), mask)
             draw_line = ImageDraw.Draw(draw)
             draw_line.line((A[0] + border_width, A[1] + border_width, B[0] + border_width, B[1] + border_width), fill=0)
