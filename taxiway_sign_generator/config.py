@@ -15,8 +15,9 @@ DIRECTION_ARROWS = {
 IMG_HEIGHT = 112
 FONT_SIZE = int(IMG_HEIGHT/100) * 100
 
-YELLOW = (240, 231, 15)
-BLACK = (0, 0, 0)
+# YELLOW and BLACK sampled from example image
+YELLOW = (255, 241, 105)
+BLACK = (104, 90, 60)
 WHITE = (255, 255, 255)
 RED = (255, 0, 0)
 
