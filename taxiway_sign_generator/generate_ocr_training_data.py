@@ -148,8 +148,17 @@ if __name__ == "__main__":
                     ""
                 ]
             )
+            yolo_str = " ".join(
+                [
+                    "0",
+                    "0.50000",
+                    "0.50000",
+                    str(x_max / draw.size[0]),
+                    str(y_max / draw.size[1])
+                ]
+            )
             with open(ground_truth_path, "w") as ground_truth_file:
                 ground_truth_file.write(
-                    pos_str
+                    yolo_str
                 )
             draw.save(new_path)
