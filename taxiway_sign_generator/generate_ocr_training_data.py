@@ -7,7 +7,6 @@ from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 from config import (
     FONT,
-    FONT_SIZE,
     IMG_HEIGHT,
     COLOUR_SCHEMES,
     BLACK,
@@ -26,7 +25,7 @@ def generate_char_img(text, font_path, colour_scheme, size, path):
 
     margin = int((FONT_SIZE - text_height)/2)
     img_width = text_width
-    img = Image.new('RGB',(text_width, text_height + 5), bg_colour)
+    img = Image.new('RGB', (text_width + 5, text_height + 5), bg_colour)
 
     draw = ImageDraw.Draw(img)
     draw.text((0, 0),
@@ -79,86 +78,93 @@ if __name__ == "__main__":
     dirpath = os.path.join('data', 'ocr')
     global_index = 1
 
-    for char in arrows:
-        Path(os.path.join(dirpath, char)).mkdir(parents=True, exist_ok=True)
-        path = os.path.join('data', 'ocr', f'{char}.png')
-        # generate_text_image(
-        #     text=char,
-        #     font_path=FONT,
-        #     colour_scheme="branching",
-        #     size=FONT_SIZE,
-        #     path=path
-        # )
+    # TODO: variation of position within training image (currently dead in centre)
+    for FONT_SIZE in [25, 50, 100, 150, 200]:
+        for char in arrows:
+            Path(os.path.join(dirpath, char)).mkdir(parents=True, exist_ok=True)
+            path = os.path.join('data', 'ocr', f'{char}_{FONT_SIZE}.png')
+            # generate_text_image(
+            #     text=char,
+            #     font_path=FONT,
+            #     colour_scheme="branching",
+            #     size=FONT_SIZE,
+            #     path=path
+            # )
 
-        """ from generate_text_image start """
-        bg_colour, fg_colour = COLOUR_SCHEMES["branching"]
-        img_font = ImageFont.truetype(FONT, FONT_SIZE)
+            """ from generate_text_image start """
+            bg_colour, fg_colour = COLOUR_SCHEMES["branching"]
+            img_font = ImageFont.truetype(FONT, FONT_SIZE)
 
-        text_img = Image.new('RGB', (FONT_SIZE, FONT_SIZE))   # for text size and margin determination
-        draw = ImageDraw.Draw(text_img)
-        text_width, text_height = draw.textsize(char, img_font)
+            text_img = Image.new('RGB', (FONT_SIZE, FONT_SIZE))   # for text size and margin determination
+            draw = ImageDraw.Draw(text_img)
+            text_width, text_height = draw.textsize(char, img_font)
 
-        margin = int((FONT_SIZE - text_height)/2)
-        img_width = text_width
-        img = Image.new('RGB',(text_width + 5, text_height + 5), bg_colour)
+            margin = int((FONT_SIZE - text_height)/2)
+            img_width = text_width
+            img = Image.new('RGB',(text_width + 5, text_height + 5), bg_colour)
 
-        draw = ImageDraw.Draw(img)
-        draw.text((0, 0),
-            char, fg_colour, img_font)
-        img.save(path)
-        #img.show()
-        """ from generate_text_image end """
-        # https://stackoverflow.com/a/51964802
+            draw = ImageDraw.Draw(img)
+            draw.text((0, 0),
+                char, fg_colour, img_font)
+            img.save(path)
+            #img.show()
+            """ from generate_text_image end """
+            # https://stackoverflow.com/a/51964802
 
-        for i in range(360):
-            border_width = 10
-            border_colour = YELLOW
-            img = Image.open(path)
-            A, B, C, D = get_rotated_size(img.size, i)
-            x_max = max([x[0] for x in [A, B, C, D]])
-            y_max = max([x[1] for x in [A, B, C, D]])
-            max_dim = max(img.size)
-            draw = Image.new('RGB',
-                (int(x_max + 2 * border_width), int(y_max + 2 * border_width)),
-                border_colour)
-            mask = Image.new('L', img.size, 255)
-            img = img.rotate(i, expand=True)
-            mask = mask.rotate(i, expand=True)
-            draw.paste(img, (border_width, border_width), mask)
-            # draw_line = ImageDraw.Draw(draw)
-            # draw_line.line((A[0] + border_width, A[1] + border_width, B[0] + border_width, B[1] + border_width), fill=0)
-            # draw_line.line((B[0] + border_width, B[1] + border_width, C[0] + border_width, C[1] + border_width), fill=0)
-            # draw_line.line((C[0] + border_width, C[1] + border_width, D[0] + border_width, D[1] + border_width), fill=0)
-            # draw_line.line((D[0] + border_width, D[1] + border_width, A[0] + border_width, A[1] + border_width), fill=0)
-            new_path = os.path.join('data', 'ocr', f'{str(global_index).zfill(3)}.png')
-            ground_truth_path = os.path.join('data', 'ocr', f'{str(global_index).zfill(3)}.txt')
-            global_index += 1
-            pos_str = ",".join(
-                [
-                    "4",
-                    str((border_width + A[0]) / draw.size[0]),
-                    str((border_width + B[0]) / draw.size[0]),
-                    str((border_width + C[0]) / draw.size[0]),
-                    str((border_width + D[0]) / draw.size[0]),
-                    str((border_width + A[1]) / draw.size[1]),
-                    str((border_width + B[1]) / draw.size[1]),
-                    str((border_width + C[1]) / draw.size[1]),
-                    str((border_width + D[1]) / draw.size[1]),
-                    "",
-                    ""
-                ]
-            )
-            yolo_str = " ".join(
-                [
-                    "0",
-                    "0.50000",
-                    "0.50000",
-                    str(x_max / draw.size[0]),
-                    str(y_max / draw.size[1])
-                ]
-            )
-            with open(ground_truth_path, "w") as ground_truth_file:
-                ground_truth_file.write(
-                    yolo_str
+            for i in range(360):
+                border_width = 10
+                border_colour = YELLOW
+                img = Image.open(path)
+                A, B, C, D = get_rotated_size(img.size, i)
+                x_max = max([x[0] for x in [A, B, C, D]])
+                y_max = max([x[1] for x in [A, B, C, D]])
+                max_dim = max(img.size)
+                draw = Image.new('RGB',
+                    (int(x_max + 2 * border_width), int(y_max + 2 * border_width)),
+                    border_colour)
+                mask = Image.new('L', img.size, 255)
+                img = img.rotate(i, expand=True)
+                mask = mask.rotate(i, expand=True)
+                draw.paste(img, (border_width, border_width), mask)
+                # draw_line = ImageDraw.Draw(draw)
+                # draw_line.line((A[0] + border_width, A[1] + border_width, B[0] + border_width, B[1] + border_width), fill=0)
+                # draw_line.line((B[0] + border_width, B[1] + border_width, C[0] + border_width, C[1] + border_width), fill=0)
+                # draw_line.line((C[0] + border_width, C[1] + border_width, D[0] + border_width, D[1] + border_width), fill=0)
+                # draw_line.line((D[0] + border_width, D[1] + border_width, A[0] + border_width, A[1] + border_width), fill=0)
+                new_path = os.path.join('data', 'ocr', f'{str(global_index).zfill(4)}.png')
+                ground_truth_path = os.path.join('data', 'ocr', f'{str(global_index).zfill(4)}.txt')
+                global_index += 1
+                pos_str = ",".join(
+                    [
+                        "4",
+                        str((border_width + A[0]) / draw.size[0]),
+                        str((border_width + B[0]) / draw.size[0]),
+                        str((border_width + C[0]) / draw.size[0]),
+                        str((border_width + D[0]) / draw.size[0]),
+                        str((border_width + A[1]) / draw.size[1]),
+                        str((border_width + B[1]) / draw.size[1]),
+                        str((border_width + C[1]) / draw.size[1]),
+                        str((border_width + D[1]) / draw.size[1]),
+                        "",
+                        ""
+                    ]
                 )
-            draw.save(new_path)
+                yolo_str = " ".join(
+                    [
+                        "0",
+                        # TODO: change for TODO from above
+                        "0.50000",
+                        "0.50000",
+                        str(x_max / draw.size[0]),
+                        str(y_max / draw.size[1])
+                    ]
+                )
+                with open(ground_truth_path, "w") as ground_truth_file:
+                    ground_truth_file.write(
+                        yolo_str
+                    )
+                with open(os.path.join('data', 'ocr', "train.txt"), "a") as train_txt:
+                    train_txt.write(
+                        "/home/peter/Misc/darknet/" + new_path + "\n"
+                    )
+                draw.save(new_path)
