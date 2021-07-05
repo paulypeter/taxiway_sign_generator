@@ -1,6 +1,7 @@
 import string
 import os
 import math
+import random
 
 from pathlib import Path
 
@@ -78,8 +79,7 @@ if __name__ == "__main__":
     dirpath = os.path.join('data', 'ocr')
     global_index = 1
 
-    # TODO: variation of position within training image (currently dead in centre)
-    for FONT_SIZE in [25, 50, 100, 150, 200]:
+    for FONT_SIZE in [50, 100, 150, 200]:
         for char in arrows:
             Path(os.path.join(dirpath, char)).mkdir(parents=True, exist_ok=True)
             path = os.path.join('data', 'ocr', f'{char}_{FONT_SIZE}.png')
@@ -120,12 +120,14 @@ if __name__ == "__main__":
                 y_max = max([x[1] for x in [A, B, C, D]])
                 max_dim = max(img.size)
                 draw = Image.new('RGB',
-                    (int(x_max), int(y_max)),
+                    (400, 400),
                     border_colour)
                 mask = Image.new('L', img.size, 255)
                 img = img.rotate(i, expand=True)
                 mask = mask.rotate(i, expand=True)
-                draw.paste(img, (0, 0), mask)
+                x_paste = random.randint(1, 300)
+                y_paste = random.randint(1, 300)
+                draw.paste(img, (x_paste, y_paste), mask)
                 # draw_line = ImageDraw.Draw(draw)
                 # draw_line.line((A[0] + border_width, A[1] + border_width, B[0] + border_width, B[1] + border_width), fill=0)
                 # draw_line.line((B[0] + border_width, B[1] + border_width, C[0] + border_width, C[1] + border_width), fill=0)
@@ -152,9 +154,8 @@ if __name__ == "__main__":
                 yolo_str = " ".join(
                     [
                         "0",
-                        # TODO: change for TODO from above
-                        "0.50000",
-                        "0.50000",
+                        str((x_paste + x_max/2)/draw.size[0]),
+                        str((y_paste + x_max/2)/draw.size[1]),
                         str(x_max / draw.size[0]),
                         str(y_max / draw.size[1])
                     ]
