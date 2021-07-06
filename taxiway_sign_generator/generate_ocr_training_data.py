@@ -2,6 +2,7 @@ import string
 import os
 import math
 import random
+import string
 
 from pathlib import Path
 
@@ -101,7 +102,7 @@ if __name__ == "__main__":
 
             margin = int((FONT_SIZE - text_height)/2)
             img_width = text_width
-            img = Image.new('RGB',(text_width + 5, text_height + 5), bg_colour)
+            img = Image.new('RGB',(text_width, text_height + 5), bg_colour)
 
             draw = ImageDraw.Draw(img)
             draw.text((0, 0),
@@ -120,38 +121,46 @@ if __name__ == "__main__":
                 y_max = max([x[1] for x in [A, B, C, D]])
                 max_dim = max(img.size)
                 draw = Image.new('RGB',
-                    (400, 400),
+                    (500, 500),
                     border_colour)
                 mask = Image.new('L', img.size, 255)
                 img = img.rotate(i, expand=True)
                 mask = mask.rotate(i, expand=True)
-                x_paste = random.randint(1, 300)
-                y_paste = random.randint(1, 300)
+                x_paste = random.randint(1, 100)
+                y_paste = random.randint(1, 100)
+                x_paste_2 = random.randint(200, 300)
+                y_paste_2 = random.randint(200, 300)
                 draw.paste(img, (x_paste, y_paste), mask)
+                draw.paste(img, (x_paste_2, y_paste_2), mask)
+                draw_text = ImageDraw.Draw(draw)
+                letter = random.choice(string.ascii_uppercase)
+                draw_text.text((x_paste, y_paste_2), letter, fg_colour, img_font)
+                letter = random.choice(string.ascii_uppercase)
+                draw_text.text((x_paste_2, y_paste), letter, fg_colour, img_font)
                 # draw_line = ImageDraw.Draw(draw)
-                # draw_line.line((A[0] + border_width, A[1] + border_width, B[0] + border_width, B[1] + border_width), fill=0)
-                # draw_line.line((B[0] + border_width, B[1] + border_width, C[0] + border_width, C[1] + border_width), fill=0)
-                # draw_line.line((C[0] + border_width, C[1] + border_width, D[0] + border_width, D[1] + border_width), fill=0)
-                # draw_line.line((D[0] + border_width, D[1] + border_width, A[0] + border_width, A[1] + border_width), fill=0)
+                # draw_line.line((A[0] + x_paste, A[1] + y_paste, B[0] + x_paste, B[1] + y_paste), fill=0)
+                # draw_line.line((B[0] + x_paste, B[1] + y_paste, C[0] + x_paste, C[1] + y_paste), fill=0)
+                # draw_line.line((C[0] + x_paste, C[1] + y_paste, D[0] + x_paste, D[1] + y_paste), fill=0)
+                # draw_line.line((D[0] + x_paste, D[1] + y_paste, A[0] + x_paste, A[1] + y_paste), fill=0)
                 new_path = os.path.join('data', 'ocr', 'images', f'{str(global_index).zfill(4)}.png')
                 ground_truth_path = os.path.join('data', 'ocr', 'labels', f'{str(global_index).zfill(4)}.txt')
                 global_index += 1
                 pos_str = ",".join(
                     [
                         "4",
-                        str((border_width + A[0]) / draw.size[0]),
-                        str((border_width + B[0]) / draw.size[0]),
-                        str((border_width + C[0]) / draw.size[0]),
-                        str((border_width + D[0]) / draw.size[0]),
-                        str((border_width + A[1]) / draw.size[1]),
-                        str((border_width + B[1]) / draw.size[1]),
-                        str((border_width + C[1]) / draw.size[1]),
-                        str((border_width + D[1]) / draw.size[1]),
+                        str((x_paste + A[0]) / draw.size[0]),
+                        str((x_paste + B[0]) / draw.size[0]),
+                        str((x_paste + C[0]) / draw.size[0]),
+                        str((x_paste + D[0]) / draw.size[0]),
+                        str((y_paste + A[1]) / draw.size[1]),
+                        str((y_paste + B[1]) / draw.size[1]),
+                        str((y_paste + C[1]) / draw.size[1]),
+                        str((y_paste + D[1]) / draw.size[1]),
                         "",
                         ""
                     ]
                 )
-                yolo_str = " ".join(
+                yolo_str_1 = " ".join(
                     [
                         "0",
                         str((x_paste + x_max/2)/draw.size[0]),
@@ -160,9 +169,21 @@ if __name__ == "__main__":
                         str(y_max / draw.size[1])
                     ]
                 )
+                yolo_str_2 = " ".join(
+                    [
+                        "0",
+                        str((x_paste_2 + x_max/2)/draw.size[0]),
+                        str((y_paste_2 + x_max/2)/draw.size[1]),
+                        str(x_max / draw.size[0]),
+                        str(y_max / draw.size[1])
+                    ]
+                )
                 with open(ground_truth_path, "w") as ground_truth_file:
                     ground_truth_file.write(
-                        yolo_str
+                        yolo_str_1 + "\n"
+                    )
+                    ground_truth_file.write(
+                        yolo_str_2
                     )
                 with open(os.path.join('data', 'ocr', "train.txt"), "a") as train_txt:
                     train_txt.write(
