@@ -160,6 +160,7 @@ if __name__ == "__main__":
                         ""
                     ]
                 )
+                arrcls = ((i + 22) // 45) % 8
                 yolo_str_1 = " ".join(
                     [
                         "0",
