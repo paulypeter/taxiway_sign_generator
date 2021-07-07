@@ -112,7 +112,8 @@ if __name__ == "__main__":
             """ from generate_text_image end """
             # https://stackoverflow.com/a/51964802
 
-            for i in range(360):
+            for angle in range(720):
+                i = angle % 360
                 border_width = 10
                 border_colour = YELLOW
                 img = Image.open(path)
@@ -130,13 +131,60 @@ if __name__ == "__main__":
                 y_paste = random.randint(1, 100)
                 x_paste_2 = random.randint(200, 300)
                 y_paste_2 = random.randint(200, 300)
-                draw.paste(img, (x_paste, y_paste), mask)
-                draw.paste(img, (x_paste_2, y_paste_2), mask)
-                draw_text = ImageDraw.Draw(draw)
-                letter = random.choice(string.ascii_uppercase)
-                draw_text.text((x_paste, y_paste_2), letter, fg_colour, img_font)
-                letter = random.choice(string.ascii_uppercase)
-                draw_text.text((x_paste_2, y_paste), letter, fg_colour, img_font)
+                arrcls = ((i + 22) // 45) % 8
+                if angle >= 360:
+                    draw.paste(img, (x_paste, y_paste), mask)
+                    draw.paste(img, (x_paste_2, y_paste_2), mask)
+                    draw_text = ImageDraw.Draw(draw)
+                    letter = random.choice(string.ascii_uppercase)
+                    draw_text.text((x_paste, y_paste_2), letter, fg_colour, img_font)
+                    letter = random.choice(string.ascii_uppercase)
+                    draw_text.text((x_paste_2, y_paste), letter, fg_colour, img_font)
+                    yolo_str_1 = " ".join(
+                        [
+                            str(arrcls),
+                            str((x_paste + x_max/2)/draw.size[0]),
+                            str((y_paste + x_max/2)/draw.size[1]),
+                            str(x_max / draw.size[0]),
+                            str(y_max / draw.size[1])
+                        ]
+                    )
+                    yolo_str_2 = " ".join(
+                        [
+                            str(arrcls),
+                            str((x_paste_2 + x_max/2)/draw.size[0]),
+                            str((y_paste_2 + x_max/2)/draw.size[1]),
+                            str(x_max / draw.size[0]),
+                            str(y_max / draw.size[1])
+                        ]
+                    )
+                else:
+                    draw.paste(img, (x_paste, y_paste_2), mask)
+                    draw.paste(img, (x_paste_2, y_paste), mask)
+                    draw_text = ImageDraw.Draw(draw)
+                    letter = random.choice(string.ascii_uppercase)
+                    draw_text.text((x_paste, y_paste), letter, fg_colour, img_font)
+                    letter = random.choice(string.ascii_uppercase)
+                    draw_text.text((x_paste_2, y_paste_2), letter, fg_colour, img_font)
+                    yolo_str_1 = " ".join(
+                        [
+                            str(arrcls),
+                            str((x_paste + x_max/2)/draw.size[0]),
+                            str((y_paste_2 + x_max/2)/draw.size[1]),
+                            str(x_max / draw.size[0]),
+                            str(y_max / draw.size[1])
+                        ]
+                    )
+                    yolo_str_2 = " ".join(
+                        [
+                            str(arrcls),
+                            str((x_paste_2 + x_max/2)/draw.size[0]),
+                            str((y_paste + x_max/2)/draw.size[1]),
+                            str(x_max / draw.size[0]),
+                            str(y_max / draw.size[1])
+                        ]
+                    )
+                    
                 # draw_line = ImageDraw.Draw(draw)
                 # draw_line.line((A[0] + x_paste, A[1] + y_paste, B[0] + x_paste, B[1] + y_paste), fill=0)
                 # draw_line.line((B[0] + x_paste, B[1] + y_paste, C[0] + x_paste, C[1] + y_paste), fill=0)
@@ -158,25 +206,6 @@ if __name__ == "__main__":
                         str((y_paste + D[1]) / draw.size[1]),
                         "",
                         ""
-                    ]
-                )
-                arrcls = ((i + 22) // 45) % 8
-                yolo_str_1 = " ".join(
-                    [
-                        "0",
-                        str((x_paste + x_max/2)/draw.size[0]),
-                        str((y_paste + x_max/2)/draw.size[1]),
-                        str(x_max / draw.size[0]),
-                        str(y_max / draw.size[1])
-                    ]
-                )
-                yolo_str_2 = " ".join(
-                    [
-                        "0",
-                        str((x_paste_2 + x_max/2)/draw.size[0]),
-                        str((y_paste_2 + x_max/2)/draw.size[1]),
-                        str(x_max / draw.size[0]),
-                        str(y_max / draw.size[1])
                     ]
                 )
                 with open(ground_truth_path, "w") as ground_truth_file:
