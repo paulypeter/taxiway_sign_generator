@@ -2,3 +2,5 @@
 *.pyc
 
 !img/examples.png
+
+taxiway_sign_generator/data/**
