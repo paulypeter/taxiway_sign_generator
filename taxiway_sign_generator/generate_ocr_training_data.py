@@ -215,8 +215,8 @@ if __name__ == "__main__":
                     ground_truth_file.write(
                         yolo_str_2
                     )
-                with open(os.path.join('data', 'ocr', "train.txt"), "a") as train_txt:
-                    train_txt.write(
-                        "/home/peter/Misc/darknet/" + new_path + "\n"
-                    )
+                # with open(os.path.join('data', 'ocr', "train.txt"), "a") as train_txt:
+                #     train_txt.write(
+                #         "/home/peter/Misc/darknet/" + new_path + "\n"
+                #     )
                 draw.save(new_path)
