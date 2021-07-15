@@ -55,7 +55,7 @@ def generate_image(directions):
     border_colour = determine_border_colour(directions)
     add_border(os.path.join(DATA_DIR, "signs", f'{combined_name}.png'), border_colour, 10)
 
-def generate_runway_sign():
+def generate_runway_text():
     RWY_LETTERS = [("", ""), ("", ""), ("", ""), ("L", "R"), ("C", "C"), ("R", "L")]
     rwy_letters = random.choice(RWY_LETTERS)
     rwy_num = random.randint(1, 36)
