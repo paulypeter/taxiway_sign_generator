@@ -67,8 +67,7 @@ def generate_runway_text():
         rwy_num = str(rwy_num)
     rwy_num += rwy_letters[0]
     rwy_num_2 += rwy_letters[1]
-    rwy_sign_text = f'{rwy_num}-{rwy_num_2}'
-    print(rwy_sign_text)
+    return = f'{rwy_num}-{rwy_num_2}'
 
 if __name__ == "__main__":
     import argparse
