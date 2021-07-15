@@ -3,7 +3,6 @@
 import os
 from pathlib import Path
 from PIL import Image
-import random
 
 from generate_direction_images import generate_direction_images
 from config import DATA_DIR, IMG_HEIGHT
@@ -54,20 +53,6 @@ def generate_image(directions):
 
     border_colour = determine_border_colour(directions)
     add_border(os.path.join(DATA_DIR, "signs", f'{combined_name}.png'), border_colour, 10)
-
-def generate_runway_text():
-    RWY_LETTERS = [("", ""), ("", ""), ("", ""), ("L", "R"), ("C", "C"), ("R", "L")]
-    rwy_letters = random.choice(RWY_LETTERS)
-    rwy_num = random.randint(1, 36)
-    if rwy_num < 19:
-        rwy_num_2 = str(rwy_num + 18)
-        rwy_num = str(rwy_num).zfill(2)
-    else:
-        rwy_num_2 = str(rwy_num - 18).zfill(2)
-        rwy_num = str(rwy_num)
-    rwy_num += rwy_letters[0]
-    rwy_num_2 += rwy_letters[1]
-    return = f'{rwy_num}-{rwy_num_2}'
 
 if __name__ == "__main__":
     import argparse

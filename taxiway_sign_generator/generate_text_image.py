@@ -1,7 +1,22 @@
 """ generate text image """
+import random
 
 from PIL import Image, ImageDraw, ImageFont
 from config import FONT, FONT_SIZE, IMG_HEIGHT, COLOUR_SCHEMES
+
+def generate_runway_text():
+    RWY_LETTERS = [("", ""), ("", ""), ("", ""), ("L", "R"), ("C", "C"), ("R", "L")]
+    rwy_letters = random.choice(RWY_LETTERS)
+    rwy_num = random.randint(1, 36)
+    if rwy_num < 19:
+        rwy_num_2 = str(rwy_num + 18)
+        rwy_num = str(rwy_num).zfill(2)
+    else:
+        rwy_num_2 = str(rwy_num - 18).zfill(2)
+        rwy_num = str(rwy_num)
+    rwy_num += rwy_letters[0]
+    rwy_num_2 += rwy_letters[1]
+    return = f'{rwy_num}-{rwy_num_2}'
 
 def generate_text_image(text, font_path, colour_scheme, size, path):
     """! generates an image of a text
