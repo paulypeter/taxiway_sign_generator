@@ -5,8 +5,10 @@ from pathlib import Path
 from PIL import Image
 
 from generate_direction_images import generate_direction_images
+from generate_text_image import generate_runway_text, generate_text_image
 from config import DATA_DIR, IMG_HEIGHT
 from add_border import add_border, determine_border_colour
+from config import FONT, FONT_SIZE, IMG_HEIGHT, COLOUR_SCHEMES
 
 def combine_images(image_list, combined_img_path):
     """! combines multiple images horizontally
@@ -53,6 +55,11 @@ def generate_image(directions):
 
     border_colour = determine_border_colour(directions)
     add_border(os.path.join(DATA_DIR, "signs", f'{combined_name}.png'), border_colour, 10)
+
+def generate_rwy_sign():
+    rwy = generate_runway_text()
+    path = f"{rwy}.png"
+    generate_text_image(rwy, FONT, "warning", FONT_SIZE, path)
 
 if __name__ == "__main__":
     import argparse
